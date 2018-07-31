@@ -11,7 +11,7 @@ permalink: matrix
 
 `Matrix<T, N>` is `N`-dimensional matrix of some value type `T`. It can be initialized by
 
-+ nested std::initializer_list:
++ a nested std::initializer_list:
 ```c
   Matrix<double, 0> m0{1};           // zero dimensions: a scalar
   Matrix<double, 1> m1{1, 2, 3, 4};  // one dimension: a vector (4 elements)
@@ -28,16 +28,58 @@ permalink: matrix
   Matrix<double, 3> m3(4, 7, 9);
 ```
 
-+ or nothing:
++ or default constructor:
 ```c
   // 17 dimensions (no elements so far)
   Matrix<complex<double>, 17> m17;
 ```
 
+The element type must be something we can store. For functions which use BLAS or LAPACK interface defined in this library, 
+only four types are supported -- namely `double`, `float`, `std::complex<double>` and `std::complex<float>`. It is possible
+to use some other types, for example:
+```c
+  Matrix<double, 2> md;  // OK
+  Matrix<string, 2> ms;  // OK: just don't try arithmetic operations
+
+  // 3-by-2 matrix of 2-by-2 matrices
+  // a matrix is a plausible "number"
+  Matrix<Matrix<int, 2>, 2> mm{
+      {  // row 0
+          { {1, 2}, {3, 4} },  // col0
+          { {4, 5}, {6, 7} },  // col1
+      },
+      {  // row 1
+          { {8, 9}, {0, 1} },  // col0
+          { {2, 3}, {4, 5} },  // col1
+      },
+      {  // row 2
+          { {1, 2}, {3, 4} },  // col0
+          { {4, 5}, {6, 7} },  // col1
+      }
+  };
+```
+
 `Matrix<T, N>` has its number of dimensions (its `order()`) specified as a template argument (here, N).
 Each dimension has a number of elements (its `extent()`) deduced from the initializer list or specified
 as a Matrix constructor argument using the () notation. The total number of elements is referred to
-as its `size()`.
+as its `size()`. For example:
+```c
+  Matrix<double, 1> m1_new(100);       // one dimension: a vector (100 elements)
+  Matrix<double, 2> m2_new(50, 6000);  // two dimensions: 50*6000
+
+  auto d1 = m1_new.order();            // 1
+  auto d2 = m2_new.order();            // 2
+
+  auto e1 = m1_new.extent(0);          // 100
+//  auto e1a = m1_new.extent(1);         // error: m1 is one-dimensional
+
+  auto e2 = m2_new.extent(0);          // 50
+  auto e2a = m2_new.extent(1);         // 6000
+
+  auto s1 = m1_new.size();             // 100
+  auto s2 = m2_new.size();             // 50*6000
+```
+
 
 For convenience the following typedefs have been defined for `Matrix<T, N>`:
 
