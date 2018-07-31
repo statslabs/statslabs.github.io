@@ -4,6 +4,14 @@ title: API Documentation for Matrix
 permalink: matrix
 ---
 
+## 0. Contents
+
+  1. [Basic Matrix Use] (#1-basic_matrix_use)
+  2. [Construction and Assignment] (#2-construction_and_assignment)
+  3. [Subscripting and Slicing] (#3-subscripting_and_slicing) 
+
+## 1. Basic Matrix Use
+
 `Matrix<T, N>` is `N`-dimensional matrix of some value type `T`.
 For convenience the following typedefs have been defined:
 
@@ -19,6 +27,9 @@ For convenience the following typedefs have been defined:
 | `unsigned int`         | `uvec`               | `umat`               | `ucube`            |
 | `int`                  | `ivec`               | `imat`               | `icube`            |
 
+## 2. Construction and Assignment
+
+## 3. Subscripting and Slicing
 
 A `Matrix<T, N>` can be accessed through subscripting (to elements or rows), through rows and columns,
 or through slices (parts of rows or columns).
@@ -32,11 +43,5 @@ or through slices (parts of rows or columns).
 | `m.rows(i, j)`           | Row i to row j of m; a `MatrixRef<T, N>`                                                   |
 | `m.cols(i, j)`           | Column i to column j of m; a `MatrixRef<T, N>`                                             |
 | `m(slice(i,n),slice(j))` | Submatrix access with slicing: a `MatrixRef<T, N>`; <br> `slice(i,n)` is elements `[i:i+n)` of the subscript's dimension; <br> `slice(j)` is elements `[i:max)` of subscript's dimension; `max`is the dimension's extent; the number of subscripts must be `N`|
-
-| `Matrix<T, 1>` Access    | Description                                                                                |
-|--------------------------|--------------------------------------------------------------------------------------------|
-| `m.subvec(i, j)`         | Row i to row j of m; a `MatrixRef<T, 1>`                                                   |
-
-| `Matrix<T, 2>` Access    | Description                                                                                |
-|--------------------------|--------------------------------------------------------------------------------------------|
-| `m.submat(i, j)`         | Row i to row j of m; a `MatrixRef<T, 2>`                                                   |
+| `m.subvec(first_index, last_index)`                  | Subvector of m (available only when N == 1, i.e., m is a vector); a `MatrixRef<T, 1>` |
+| `m.submat(first_row, first_col, last_row, last_col)` | Submatrix of m (available only when N == 2, i.e., m is a matrix); a `MatrixRef<T, 2>` |
