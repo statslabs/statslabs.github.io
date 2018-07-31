@@ -20,15 +20,23 @@ For convenience the following typedefs have been defined:
 | `int`                  | `ivec`               | `imat`               | `icube`            |
 
 
-A `Matrix` can be accessed through subscripting (to elements or rows), through rows and columns,
+A `Matrix<T, N>` can be accessed through subscripting (to elements or rows), through rows and columns,
 or through slices (parts of rows or columns).
 
 | `Matrix<T, N>` Access    | Description                                                                                |
 |--------------------------|--------------------------------------------------------------------------------------------|
-| `m.row(i)`               | Row i of m; a `MatrixRef<T, N-1>`                                                          |
-| `m.col(i)`               | Column i of m; a `MatrixRef<T, N-1>`                                                       |
-| `m.rows(i, j)`           | Row i to Row j of m; a `MatrixRef<T, N-1>`                                                          |
-| `m.cols(i, j)`           | Column i to Column j of m; a `MatrixRef<T, N-1>`                                                       |
 | `m[i]`                   | C-style subscripting: `m.row(i)`                                                           |
 | `m(i,j)`                 | Fortran-style element access: `m[i][j]`; a `T&`; <br> the number of subscripts must be `N` |
+| `m.row(i)`               | Row i of m; a `MatrixRef<T, N-1>`                                                          |
+| `m.col(i)`               | Column i of m; a `MatrixRef<T, N-1>`                                                       |
+| `m.rows(i, j)`           | Row i to row j of m; a `MatrixRef<T, N>`                                                   |
+| `m.cols(i, j)`           | Column i to column j of m; a `MatrixRef<T, N>`                                             |
 | `m(slice(i,n),slice(j))` | Submatrix access with slicing: a `MatrixRef<T, N>`; <br> `slice(i,n)` is elements `[i:i+n)` of the subscript's dimension; <br> `slice(j)` is elements `[i:max)` of subscript's dimension; `max`is the dimension's extent; the number of subscripts must be `N`|
+
+| `Matrix<T, 1>` Access    | Description                                                                                |
+|--------------------------|--------------------------------------------------------------------------------------------|
+| `m.subvec(i, j)`         | Row i to row j of m; a `MatrixRef<T, 1>`                                                   |
+
+| `Matrix<T, 2>` Access    | Description                                                                                |
+|--------------------------|--------------------------------------------------------------------------------------------|
+| `m.submat(i, j)`         | Row i to row j of m; a `MatrixRef<T, 2>`                                                   |
