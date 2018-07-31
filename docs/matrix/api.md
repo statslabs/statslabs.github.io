@@ -9,9 +9,37 @@ permalink: matrix
 
 ## 1. Basic Matrix Use
 
-`Matrix<T, N>` is `N`-dimensional matrix of some value type `T`.
-For convenience the following typedefs have been defined:
+`Matrix<T, N>` is `N`-dimensional matrix of some value type `T`. It can be initialized by
 
++ nested std::initializer_list:
+```c
+  Matrix<double, 0> m0{1};           // zero dimensions: a scalar
+  Matrix<double, 1> m1{1, 2, 3, 4};  // one dimension: a vector (4 elements)
+  Matrix<double, 2> m2{              // two dimensions (4*3 elements)
+      {00, 01, 02, 03},  // row 0
+      {10, 11, 12, 13},  // row 1
+      {20, 21, 22, 23}   // row 2
+  };
+```
+
++ pre-specified dimensions:
+```c
+  // three dimensions (4*7*9 elements), all 0-initialized
+  Matrix<double, 3> m3(4, 7, 9);
+```
+
++ or nothing:
+```c
+  // 17 dimensions (no elements so far)
+  Matrix<complex<double>, 17> m17;
+```
+
+`Matrix<T, N>` has its number of dimensions (its `order()`) specified as a template argument (here, N).
+Each dimension has a number of elements (its `extent()`) deduced from the initializer list or specified
+as a Matrix constructor argument using the () notation. The total number of elements is referred to
+as its `size()`.
+
+For convenience the following typedefs have been defined for `Matrix<T, N>`:
 
 | T (value_type)         | Vector <br> (N == 1) | Matrix <br> (N == 2) | Cube <br> (N == 3) |
 |------------------------|----------------------|----------------------|--------------------|
