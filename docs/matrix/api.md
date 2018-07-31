@@ -4,11 +4,8 @@ title: API Documentation for Matrix
 permalink: matrix
 ---
 
-## 0. Contents
-
-  1. [Basic Matrix Use] (#1-basic_matrix_use)
-  2. [Construction and Assignment] (#2-construction_and_assignment)
-  3. [Subscripting and Slicing] (#3-subscripting_and_slicing) 
+* Contents
+{:toc}
 
 ## 1. Basic Matrix Use
 
