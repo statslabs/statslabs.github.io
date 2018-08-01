@@ -34,9 +34,23 @@ permalink: matrix
   Matrix<complex<double>, 17> m17;
 ```
 
-The element type must be something we can store. For functions which use BLAS or LAPACK interface defined in this library, 
-only four types are supported -- namely `double`, `float`, `std::complex<double>` and `std::complex<float>`. It is possible
-to use some other types, for example:
+The element type must be something we can store. Some typical types for value type T include `double`, `float`, 
+`std::complex<double>`, `std::complex<float>`, `int` and `unsigned int`. When you use BLAS or LAPACK interface defined 
+in this library, only the first four types are supported -- namely `double`, `float`, `std::complex<double>` and 
+`std::complex<float>`. For convenience the following typedefs have been defined for `Matrix<T, N>`:
+
+| T (value_type)         | Vector <br> (N == 1) | Matrix <br> (N == 2) | Cube <br> (N == 3) |
+|------------------------|----------------------|----------------------|--------------------|
+| `double`               | `vec`                | `mat`                | `cube`             |
+| `double`               | `dvec`               | `dmat`               | `dcube`            |
+| `float`                | `fvec`               | `fmat`               | `fcube`            |
+| `std::complex<double>` | `cx_vec`             | `cx_mat`             | `cx_cube`          |
+| `std::complex<double>` | `cx_dvec`            | `cx_dmat`            | `cx_dcube`         |
+| `std::complex<float>`  | `cx_fvec`            | `cx_fmat`            | `cx_fcube`         |
+| `unsigned int`         | `uvec`               | `umat`               | `ucube`            |
+| `int`                  | `ivec`               | `imat`               | `icube`            |
+
+It is also possible to use some other non-typical types, for example:
 ```c
   Matrix<double, 2> md;  // OK
   Matrix<string, 2> ms;  // OK: just don't try arithmetic operations
@@ -58,6 +72,9 @@ to use some other types, for example:
       }
   };
 ```
+Matrix arithmetic doesn’t have exactly the same mathematical properties as the matrix with typical value types, 
+so we must be careful how we use such a matrix.
+
 
 `Matrix<T, N>` has its number of dimensions (its `order()`) specified as a template argument (here, N).
 Each dimension has a number of elements (its `extent()`) deduced from the initializer list or specified
@@ -79,20 +96,6 @@ as its `size()`. For example:
   auto s1 = m1_new.size();             // 100
   auto s2 = m2_new.size();             // 50*6000
 ```
-
-
-For convenience the following typedefs have been defined for `Matrix<T, N>`:
-
-| T (value_type)         | Vector <br> (N == 1) | Matrix <br> (N == 2) | Cube <br> (N == 3) |
-|------------------------|----------------------|----------------------|--------------------|
-| `double`               | `vec`                | `mat`                | `cube`             |
-| `double`               | `dvec`               | `dmat`               | `dcube`            |
-| `float`                | `fvec`               | `fmat`               | `fcube`            |
-| `std::complex<double>` | `cx_vec`             | `cx_mat`             | `cx_cube`          |
-| `std::complex<double>` | `cx_dvec`            | `cx_dmat`            | `cx_dcube`         |
-| `std::complex<float>`  | `cx_fvec`            | `cx_fmat`            | `cx_fcube`         |
-| `unsigned int`         | `uvec`               | `umat`               | `ucube`            |
-| `int`                  | `ivec`               | `imat`               | `icube`            |
 
 ## 2. Construction and Assignment
 
