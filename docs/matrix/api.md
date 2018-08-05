@@ -1,11 +1,13 @@
 ---
 layout: page
-title: API Documentation for Matrix
+title: Documentation for Matrix
 permalink: matrix
 ---
 
 * Contents
 {:toc}
+
+This documentation is based on Ch29 "A Matrix Design" of the book "The C++ Programming Language" excluding all the implementation details.
 
 ## 1. Basic Matrix Use
 
@@ -39,9 +41,9 @@ The element type must be something we can store. Some typical types for T includ
 in this library, only the first four types are supported -- namely `double`, `float`, `std::complex<double>` and 
 `std::complex<float>`. For convenience the following typedefs have been defined for `Matrix<T, N>`:
 
-| T (value_type)         | Vector <br> (N == 1) | Matrix <br> (N == 2) | Cube <br> (N == 3) |
+| T (value_type)         | vector <br> (N == 1) | matrix <br> (N == 2) | cube <br> (N == 3) |
 |------------------------|----------------------|----------------------|--------------------|
-| `double`               | `vec`                | `mat`                | `cube`             |
+| `double` (default type)| `vec`                | `mat`                | `cube`             |
 | `double`               | `dvec`               | `dmat`               | `dcube`            |
 | `float`                | `fvec`               | `fmat`               | `fcube`            |
 | `std::complex<double>` | `cx_vec`             | `cx_mat`             | `cx_cube`          |
@@ -130,6 +132,25 @@ We can access `Matrix` elements by several forms of subscripting. For example:
 The complete source file for this section can be find in file [01_basic_matrix_uses.cc](https://github.com/statslabs/matrix/blob/master/examples/01_basic_matrix_uses.cc).
 
 ## 2. Construction and Assignment
+
++ A `Matrix<T, N>` can be initialized by `Matrix<T, N>`.
+
+  **Note**:
+  Internally, a `Matrix<T, N>` has two private data members -- a `std::vector<T>` named `elem_` and a `MatrixSlice<N>` named `desc_`. 
+  Using a `std::vector<T>` to hold the elements relieves us from concerns of memory management and exception safety.
+  A `MatrixSlice<N>` holds the sizes necessary to access the elements as an `N`-dimensional matrix. 
+  The default copy and move operations have just the right semantics: member-wise copy or move of `desc_` (matrix slice 
+  descriptor defining subscripting) and the `elem_`.
+
++ A `Matrix<T, N>` can be initialized by `MatrixInilizer<T, N>`. Here `MatrixInilizer<T, N>` is a suitably nested initializer list.
+
++ A `Matrix<T, N>` can be initialized by extents. 
+
++ A `Matrix<T, N>` can be initialized by `MatrixRef<T, N>`. A `MatrixRef<T, N>` behaves just like a `Matrix<T, N>`
+except that it refers to a `Matrix<T, N>`, and is typically a sub-Matrix such as a row or a column, rather than owning 
+its elements.
+
+The complete source file for this section can be find in file [02_construction_and_assignment.cc](https://github.com/statslabs/matrix/blob/master/examples/02_construction_and_assignment.cc)
 
 ## 3. Subscripting and Slicing
 
