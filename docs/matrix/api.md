@@ -9,7 +9,7 @@ permalink: matrix
 
 ## 1. Basic Matrix Use
 
-`Matrix<T, N>` is `N`-dimensional matrix of some value type `T`. It can be initialized by
+`Matrix<T, N>` is an `N`-dimensional matrix of some value type `T`. It can be initialized by
 
 + a nested std::initializer_list:
 ```c
@@ -34,7 +34,7 @@ permalink: matrix
   Matrix<complex<double>, 17> m17;
 ```
 
-The element type must be something we can store. Some typical types for value type T include `double`, `float`, 
+The element type must be something we can store. Some typical types for T include `double`, `float`, 
 `std::complex<double>`, `std::complex<float>`, `int` and `unsigned int`. When you use BLAS or LAPACK interface defined 
 in this library, only the first four types are supported -- namely `double`, `float`, `std::complex<double>` and 
 `std::complex<float>`. For convenience the following typedefs have been defined for `Matrix<T, N>`:
@@ -75,10 +75,24 @@ It is also possible to use some other non-typical types, for example:
 Matrix arithmetic doesn’t have exactly the same mathematical properties as the matrix with typical value types, 
 so we must be careful how we use such a matrix.
 
+As for `std::vector`, we use `()` to specify sizes and `{}` to specify element values. The number rows must match the 
+specified number of dimensions and the number of elements in each dimension (each column) must match. For example:
+```c
+  Matrix<char, 2> mc1(2, 3, 4);  // error: two many dimension sizes
 
-`Matrix<T, N>` has its number of dimensions (its `order()`) specified as a template argument (here, N).
+  Matrix<char, 2> mc2{
+      {'1', '2', '3'}  // note: this one should be okay
+  };
+
+  Matrix<char, 2> mc3{
+      {'1', '2', '3'},
+      {'4', '5'}  // error: element missing for third column
+  };
+```
+
+`Matrix<T, N>` has its number of dimensions (its `order()`) specified as a template argument (here, `N`).
 Each dimension has a number of elements (its `extent()`) deduced from the initializer list or specified
-as a Matrix constructor argument using the () notation. The total number of elements is referred to
+as a Matrix constructor argument using the `()` notation. The total number of elements is referred to
 as its `size()`. For example:
 ```c
   Matrix<double, 1> m1_new(100);       // one dimension: a vector (100 elements)
@@ -96,6 +110,24 @@ as its `size()`. For example:
   auto s1 = m1_new.size();             // 100
   auto s2 = m2_new.size();             // 50*6000
 ```
+
+We can access `Matrix` elements by several forms of subscripting. For example:
+```c
+  Matrix<double, 2> m{                 // two dimensions (4*3 elements)
+      {00, 01, 02, 03},  // row 0
+      {10, 11, 12, 13},  // row 1
+      {20, 21, 22, 23}   // row 2
+  };
+  cout << "\nm = " << m << endl;       // print a Matrix
+
+  Matrix<double, 1> v = m[1];
+
+  double dval1 = m(1, 2);              // 12
+  double dval2 = m[1][2];              // 12
+  double dval3 = v[2];                 // 12
+```
+
+The complete source file for this section can be find in file [01_basic_matrix_uses.cc](https://github.com/statslabs/matrix/blob/master/examples/01_basic_matrix_uses.cc).
 
 ## 2. Construction and Assignment
 
