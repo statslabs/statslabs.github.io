@@ -1,6 +1,6 @@
 ---
 layout: page
-title: API Documentation for RMath
+title: Rmath
 permalink: rmath
 ---
 

@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Documentation for Matrix
-permalink: matrix
+title: Matrix
+permalink: /matrix/
 ---
 
 * Contents
