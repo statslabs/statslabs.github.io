@@ -1,6 +1,10 @@
 ---
-# Feel free to add content and custom Front Matter to this file.
-# To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
-
-layout: home
+layout: post
 ---
+# Statslabs Overview
+Statslabs is a collection of modular and reusable libraries for scientific computing with C++.
+
+The current primary packages of Statslabs project are:
+1. matrix
+2. stats
+
