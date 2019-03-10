@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Rmath
-permalink: rmath
+title: stats
+permalink: stats
 ---
 
 ## Mathematical Constants
