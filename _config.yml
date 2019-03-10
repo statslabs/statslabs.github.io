@@ -1,4 +1,4 @@
-title: Statslabs
+title: Statslabs -- Statistical Computing with C++
 email: ypan1988@gmail.com
 description: The statslabs.github.io website
 
@@ -35,10 +35,3 @@ collections:
     output: true
     permalink: /:collection/:path
 # End
-
-# Site menu settings
-menu:
-  - title: "matrix"
-    url: "/matrix"
-  - title: "stats"
-    url: "/stats"
