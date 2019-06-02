@@ -1,117 +1,13 @@
 ---
 layout: page
-title: Matrix
-author: Yi Pan
-permalink: /matrix
+title: Statslabs::Matrix API Documentation
+permalink: /matrix/guide
 ---
 
 * Contents
 {:toc}
 
-## Overview
-
-Statslabs::Matrix is the fundamental package of Statslabs for statistical
-computing in C++. The Statslabs::Matrix library code is based on 'Ch29 A Matrix
-Design' in 'The C++ Programming Language (4th Edition)' and provides:
-  + A Matrix Template: Construction and Assignment; Subscripting and Slicing
-  + Matrix Arithmetic Operations: Scalar Operations; Addition; Multiplication
-  + Matrix Implementation: slice; MatrixSlice; MatrixRef; Matrix List
-    Initialization; Matrix Access; Zero-Dimensional Matrix
-  + An Interface to Intel(R) MKL BLAS Routines using the Matrix Template
-
-## Prerequisites
-
-    CMake >= 3.6.0
-    Intel Math Kernel Library (Intel MKL)
-   
-## Installation
-1. Clone the repository.
-   ```sh
-   git clone https://github.com/statslabs/matrix
-   ```
-2. Configure the project.
-   ```sh
-   cd matrix
-   mkdir build && cd build
-   cmake ..
-   ```
-   (OPTIONAL) To build docs/examples/tests, configure matrix with the following cmake options:
-   ```sh
-   -DSLAB_INCLUDE_DOCS=ON
-   -DSLAB_INCLUDE_EXAMPLES=ON
-   -DSLAB_INCLUDE_TESTS=ON
-   ```
-3. Compile and install the library.
-   ```sh
-   make
-   make install
-   ```
-
-## Example program
-`examples/demo.cc`:
-```c
-#include <iostream>
-#include "slab/matrix.h"
-
-using namespace std;
-using namespace slab;
-
-int main() {
-  mat A = {
-      {1, 2, 3},
-      {4, 5, 6},
-      {7, 8, 9}
-  };
-
-  mat B = {
-      {1, 2, 3},
-      {4, 5, 6},
-      {7, 8, 9}
-  };
-
-  // Element-wise addition
-  cout << "A + B = " << A + B << endl;
-
-  // Element-wise subtraction
-  cout << "A - B = " << A - B << endl;
-
-  // Element-wise multiplication
-  cout << "A * B = " << A * B << endl;
-
-  // Element-wise division
-  cout << "A / B = " << A / B << endl;
-
-  // Matrix multiplication
-  cout << "matmul(A, B) = " << matmul(A, B) << endl;
-
-  return 0;
-}
-```
-
-## Integration of Matrix in your own project
-
-To make the project simple enough, we will create a CMake project for `demo.cc`.
-
-1. Make a project folder.
-   ```sh
-   mkdir example && cd example
-   ```
-
-2. Create `demo.cc` and `CMakeLists.txt` in the project folder where file
-   `CMakeLists.txt` should look like:
-   ```cmake
-   cmake_minimum_required(VERSION 3.0)
-   project(example)
-   set(CMAKE_CXX_STANDARD 11)
-   add_executable(example demo.cc)
-
-   find_package(Matrix REQUIRED)
-   target_link_libraries(example Statslabs::Matrix)
-   ```
-
-## API Documentation
-
-### Basic Matrix Use
+## Basic Matrix Use
 
 + `Matrix<T, N>` is an `N`-dimensional dense matrix of some value type `T`, with
 element stored in row-major ordering (i.e., row by row). It can be used like
@@ -222,11 +118,10 @@ referred to as its `size()`.
 
   double dval1 = m(1, 2);  // 12
   double dval2 = m[1][2];  // 12
-  double dval3 = v[2];     // 12
+  double dval3 = v[2];   Guide  // 12
 ```
 
-+ For convenience the following type aliases have been defined for `Matrix<T,
-  N>`:
++ For convenience the following type aliases have been defined for `Matrix<T, N>`:
 
 | T (value_type)         | vector <br> (N == 1) | matrix <br> (N == 2) | cube <br> (N == 3) |
 |------------------------|----------------------|----------------------|--------------------|
@@ -242,7 +137,7 @@ referred to as its `size()`.
 The complete source file for this section can be find in file
 [01_basic_matrix_uses.cc](https://github.com/statslabs/matrix/blob/master/examples/01_basic_matrix_uses.cc).
 
-#### Construction and Assignment:
+### Construction and Assignment
 A `Matrix<T, N>` can be intialized by:
 
 + `Matrix<T, N>()` -- using default constructor:
@@ -321,7 +216,7 @@ rather than owning its elements.
 The complete source file for this section can be find in file
 [02_construction_and_assignment.cc](https://github.com/statslabs/matrix/blob/master/examples/02_construction_and_assignment.cc).
 
-#### Subscripting and Slicing
+### Subscripting and Slicing
 
 A `Matrix<T, N>` can be accessed through subscripting (to elements or rows),
 through rows and columns, or through slices (parts of rows or columns).
@@ -376,7 +271,7 @@ through rows and columns, or through slices (parts of rows or columns).
 The complete source file for this section can be find in file
 [03_subscripting_and_slicing.cc](https://github.com/statslabs/matrix/blob/master/examples/03_subscripting_and_slicing.cc).
 
-#### Matrix Arithmetic Operations
+### Matrix Arithmetic Operations
 
 | (Member) function / Operator | Description |
 | + , += | Addition of two objects |
@@ -398,3 +293,16 @@ Matrix<int, 2> m5 = matmul(m1, m4);         // multiply: { {44,56}, {98,128} }
 
 The complete source file for this section can be find in file
 [04_matrix_arithmetric_operations.cc](https://github.com/statslabs/matrix/blob/master/examples/04_matrix_arithmetric_operations.cc).
+
+## More (Member) Functions for Matrix
+
+### Generated Vectors/Matrices/Cubes
+### Functions of Vectors/Matrices/Cubes
+### Decompositions, Factorisations, Inverses and Equation Solvers
+
+## BLAS interface for Matrix
+
+### BLAS Level 1 Routines and Functions
+### BLAS Level 2 Routines and Functions
+### BLAS Level 3 Routines and Functions
+
