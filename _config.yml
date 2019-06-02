@@ -25,9 +25,12 @@ plugins:
 #   - vendor/gems/
 #   - vendor/ruby/
 
-# Site permalink settings
-permalink: /:title/
-# End
+# If you want to link only specific pages in your header, uncomment
+# this and add the path to the pages in order as they should show up
+header_pages:
+  - about.md
+  - docs/matrix/index.md
+
 
 # Collections settings
 collections:
@@ -35,3 +38,4 @@ collections:
     output: true
     permalink: /:collection/:path
 # End
+#
